@@ -1,0 +1,191 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+% Packages
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+%% for text
+\usepackage{adforn} % arrows
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{alphalph}
+\usepackage[titletoc]{appendix}
+\usepackage{comment}
+\usepackage{commath}
+%\usepackage{datetime}
+\usepackage{footnote}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{setspace}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+%\usepackage{minted}
+\usepackage{enumerate}
+
+
+%% for tables/figures
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{caption}
+%\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\usepackage{tabularx}
+\usepackage[para, flushleft]{threeparttablex}
+\usepackage{float}
+
+%% bib
+\usepackage{bibunits}
+\usepackage[round,comma,authoryear]{natbib}
+\bibliographystyle{plainnat}
+
+
+%% tikz
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+% Equations
+\usepackage{chngcntr}
+
+% Theorems
+%\theoremstyle{definition}
+\newtheoremstyle{exampstyle}
+  {\topsep} % Space above
+  {\topsep} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\bfseries} % Theorem head font
+  {.} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {} % Theorem head spec (can be left empty, meaning `normal')
+
+\theoremstyle{exampstyle}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{ex}{Example}
+\newtheorem{cor}{Corollary}
+
+\newcommand{\Q}{\mathbb{Q}} % shortcut for Q operator
+\newcommand{\M}{\mathbb{M}} % shortcut for M operator
+
+\newcommand{\E}[2]{\mathbb{E} \left[ #1 \mid #2 \right]} % shortcut for conditional expectation
+\newcommand{\sfr}{{\sf r}} % shortcut for san serif r
+
+\newcommand{\pr}[1]{\left( #1 \right)}
+\newcommand{\br}[1]{\left[ #1 \right]}
+
+
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
+
+ \usepackage{titlesec}
+ \usepackage{physics}
+ 
+  
+ \setlength\parindent{0pt}
+ \usepackage[parfill]{parskip}
+ 
+
+\restylefloat{table}
+\title{The Permanent Income Model}
+
+
+\begin{document}
+\maketitle
+
+\section{Model Construction}
+\subsection{Preference: Recursive Utility with Habit Persistence}
+We introduce $U_t$ via a CES aggregator of current consumption $C_t$ and a household stock variable $H_t$. $H_t$, which is a geometrically weighted average of current and past consumptions and the initial $H_0$, can be interpreted either as habits or as durable goods.
+
+A representative household ranks $\{U_t: t\geq 0\}$ processes with a utility functional $\{V_t: t\geq 0\}$ processes. We also introduce an $\{R_t: t\geq 0\}$ process as a risk adjusted version of  $\{V_t: t\geq 0\}$, called a certainty equivalent. $V_t$, $R_t$, $U_t$ and $H_t$ are defined via the following recursion:
+\begin{equation}\label{key}
+	   V_t = \left[(1-\beta)U_t^{1-\rho}+\beta R_t^{1-\rho}\right]^{\frac{1}{1-\rho}} 
+\end{equation}
+
+Stochastic growth in the income process (will be introduced shortly) makes it natural to divide every variable in the above equations by $Y_t$ to form a balanced growth version: 
+\begin{equation}\label{key}
+	    \frac{V_t}{Y_t} = \left[(1-\beta)\left(\frac{U_t}{Y_t}\right)^{1-\rho}+\beta\left(\frac{R_t}{Y_t}\right)^{1-\rho}\right]^{\frac{1}{1-\rho}}
+\end{equation}
+
+The reciprocal of the parameter $\rho$ describes the consumer's attitudes toward intertemporal substitution, while the parameter $\gamma$ describes the consumer's attitudes toward risk.
+
+\subsection{Technology: AK with Non-Financial Income}
+
+We construct a nonlinear version of a permanent income technology in the spirit of hansen1999robust and hansen2013recursive, Hansen and Sargent (2013, ch. 11) that assumes the consumer's non-financial income process $\left\{Y_t\right\}$ is an exogenous multiplicative functional.
+\begin{equation}\label{key}
+	    K_{t+1} - K_t +C_t = {\sf a} K_t + Y_t
+\end{equation}
+
+
+balanced growth version:
+\begin{equation}\label{key}
+	    \frac{K_{t+1}}{Y_{t+1}} \frac{Y_{t+1}}{Y_t} -\frac{K_t}{Y_t} + \frac{C_t}{Y_t} = {\sf a} \frac{K_t}{Y_t} + 1
+\end{equation}
+
+
+We use this to define a model variable "scaled gross investment":
+\begin{equation}\label{key}
+	   \log Y_{t+1} - \log Y_t = D{Z_t} + FW_{t+1} + {\sf{g}}
+\end{equation}
+
+\begin{equation}\label{key}
+	    Z_{t+1} = AZ_t + BW_{t+1}
+\end{equation}
+$Z_t$ is a $3 \times 1$ vector 
+\begin{equation}\label{key}
+	    Z_t = \left[Z_{1,t}, Z_{2,t}, Z_{2,t-1}\right]^{\prime}
+\end{equation}
+and $W_{t+1}$ is a $2 \times 1$ vector
+\begin{equation}\label{key}
+	 W_{t+1} = \left[W_{1,t+1}, W_{2,t+1}\right]^{\prime}
+\end{equation}
+where $W_{1,t+1}$ and $W_{2,t+1}$ are shocks to $Z_{1,t+1}$ and $Z_{2,t+1}$, respectively, and $W_{t+1}$  follows a standardized multivariate normal distribution.
+We assume the following parameter values originally estimated by hansen1999robust:
+\begin{equation}\label{key}
+	  \log\left(\frac{Y_{t+1}}{Y_t}\right) = .01(Z_{1,t+1}+Z_{2,t+1}-Z_{2,t}) = .01\left(\begin{bmatrix} .704 & 0 & -.154\end{bmatrix} \begin{bmatrix} Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.144 & .206\end{bmatrix} \begin{bmatrix}W_{1,t+1}\\W_{2,t+1} \end{bmatrix}\right) + .00373
+\end{equation}
+\begin{equation}\label{key}
+	  \begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.704 & 0 & 0 \\0 & 1 & -.154\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.144 & 0 \\0 & .206 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+\end{equation}
+
+
+$W_{1,t+1}$ and $W_{2,t+1}$ play different roles in the non-financial income process. $W_{1,t+1}$ has a permanent effect on income, while $W_{2,t+1}$ only has a transient effect. This can be seen by computing and plotting the impulse response function of $\log Y_t$ to each shock. Note that the responses are multiplied by 100 to reflect percentage responses.
+
+\subsection{Stochastic Discount Factor; FOC on investment}
+SDF increment in units of $U_t$:
+\begin{equation}\label{key}
+	 \widetilde{\frac{S_{t+1}}{S_t}} = \beta \left(\frac{V_{t+1}}{R_t}\right)^{1-\gamma} \left(\frac{V_{t+1}}{R_t}\right)^{\rho-1} \left(\frac{U_{t+1}}{U_t}\right)^{-\rho}
+\end{equation}
+
+Note that the $ \left(\frac{V_{t+1}}{R_t}\right)^{1-\gamma}$ term is written separately. This is because it is a random variable with mean 1 conditioned on time $t$ information. Therefore, it represents a change of probability measure whenever we take a mathematical expectation. Specifically, $W_{t+1}$  follows a standardized multivariate  normal distribution under the "original" probability measure, but after taking into account of the change of measure, the distribution of $W_{t+1}$ is different. What differences? How many details shall we provide. Therefore, the change of measure alters the structure of terms in which $W_{t+1}$ is involved.
+
+We are more interested in viewing $C_t$ rather than $U_t$ as the numeraire. This leads us to introduce two additional equations in which enduring effects of consumption at $t$ come into play. These equations in effect pin down two marginal rates of substitution, $\frac{MC_t}{MU_t}$ and $\frac{MH_t}{MU_t}$. 
+
+$\frac{MC_t}{MU_t}$ has different specificiations depending on whether habit is "external (externality is ignored by the consumer)" or "internal (externality is internalized by the consumer)".
+
+- External:
+\begin{equation}\label{key}
+	\frac{MC_t}{MU_t} = (1-\alpha)\left( \frac{U_t}{C_t} \right)^\epsilon
+\end{equation}
+- Internal:
+\begin{equation}\label{key}
+	  \frac{MC_t}{MU_t} = (1-\alpha)\left( \frac{U_t}{C_t} \right)^\epsilon + (1-\chi) \mathbb{E}\left[\widetilde{\frac{S_{t+1}}{S_t}}\frac{MH_{t+1}}{MU_{t+1}} \Biggl| {\mathfrak F}_t\right]
+\end{equation}
+where $\frac{MH_t}{MU_t}$ satisfies:
+\begin{equation}\label{key}
+	   \frac{MH_t}{MU_t} = \alpha\left( \frac{U_t}{H_t} \right)^\epsilon + \chi \mathbb{E}\left[\widetilde{\frac{S_{t+1}}{S_t}}\frac{MH_{t+1}}{MU_{t+1}} \Biggl| {\mathfrak F}_t \right]
+\end{equation}
+Then we have SDF increment in units of $C_t$:
+\begin{equation}\label{key}
+	 \frac{S_{t+1}}{S_t} = \widetilde{\left(\frac{S_{t+1}}{S_t}\right)}\left(\frac{{MC_{t+1}}/{MU_{t+1}}}{{MC_t}/{MU_t}}\right)
+\end{equation}
+FOC on investment:
+\begin{equation}\label{key}
+ \log\mathbb{E}\left[\left(1+ {\sf a}\right)\frac{S_{t+1}}{S_t}\Biggl| {\mathfrak F}_t\right] = 0 
+\end{equation}
+
+
+\end{document}

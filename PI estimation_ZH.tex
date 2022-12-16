@@ -1,0 +1,226 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+%% for text
+\usepackage{adforn} % arrows
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{alphalph}
+\usepackage[titletoc]{appendix}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{datetime}
+\usepackage{footnote}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{setspace}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+%\usepackage{minted}
+\usepackage{enumerate}
+
+%% for tables/figures
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{caption}
+%\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\usepackage{tabularx}
+\usepackage[para, flushleft]{threeparttablex}
+\usepackage{float}
+
+%% bib
+\usepackage{bibunits}
+\usepackage{natbib}
+
+%% tikz
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+% Equations
+\usepackage{chngcntr}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{ex}{Ex}
+\newtheorem{cor}{Corollary}
+\newcommand{\R}{\mathbb{R}}
+
+\theoremstyle{remark}
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
+
+ \usepackage{titlesec}
+ \usepackage{physics}
+ 
+  
+ \setlength\parindent{0pt}
+ \usepackage[parfill]{parskip}
+ 
+% Macro Pset Style
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection\alph{subsection}.}
+\titleformat{\subsection}{\small\bfseries}{\thesubsection}{1em}{}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+ \title{Notes on PI model estimation}
+ \author{Zhenhuan Xie}
+ \date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{0th and 1st order expansion}
+
+We assume that the equilibrium model solutions form a class of $n$ dimensional stochastic processes $\{X_t({\sf q})\}$ indexed by the perturbation parameter $\sf q$ satisfying the recursion (law of motion):
+
+\begin{equation*}
+    X_{t+1}({\sf q}) = \psi[X_t({\sf q}), {\sf q}W_{t+1}, {\sf q}] \label{xlom} \tag{11}
+\end{equation*}
+
+Although we typically don't have quasi-analytical solution of \eqref{xlom}, we can approximate it with first- and second-order small noise expansions. 
+
+A first-order expansion of $X_t({\sf q})$ around ${\sf q} = 0$ takes the form
+\begin{equation*}
+    X_t \approx X_t^0 + {\sf q} X_t^1
+\end{equation*}
+
+The 0th order component (steady state), $X_t^0$, is just a constant. 
+
+For example, in the permanent income model\footnote{For a full description of the model, see another file PI model notes.} that is of interest to us:
+\begin{itemize}
+	\item The 0th order component of $\frac{K}{Y}$ is a free initial condition that we can freely\footnote{This means that each different choice of $\frac{K^0}{Y^0}$ can result in unique model dynamics} impose, and we would like to choose the $\frac{K^0}{Y^0}$ that can match the investment/consumption data\footnote{How? See the explanation below on $\frac{I_t^0}{C_t^0}$}.
+	\item The 0th order component of $\log\left(\frac{Y_{t+1}}{Y_t}\right)$ is ${\sf g}$, which is a number that we can compute by matching it with log consumption growth data\footnote{Why log consumption growth? See the explanation below on $\log\left(\frac{C_{t+1}^0}{C_t^0}\right)$.}.
+	\item The 0th order component of $\frac{C}{Y}$ is:
+\begin{equation*}
+	\log \left(\frac{C^0}{Y^0}\right) = \log \left\{\left[1+{\sf a} - \exp \left(\sf g \right) \right]\left(\frac{K^0}{Y^0}\right) + 1 \right\}
+\end{equation*}
+	\item The 0th order component of $\log\left(\frac{C_{t+1}}{C_t}\right)$ is (recall balanced growth of $\log\left(\frac{C}{Y}\right)$):
+\begin{equation*}
+	\log\left(\frac{C_{t+1}^0}{C_t^0}\right) = \log\left(\frac{C_{t+1}^0}{Y_{t+1}^0}\right) + \log\left(\frac{Y_{t+1}^0}{Y_t^0}\right) - \log\left(\frac{C_{t}^0}{Y_{t}^0}\right) = \log\left(\frac{Y_{t+1}^0}{Y_t^0}\right) = {\sf g}
+\end{equation*}
+	\item The 0th order component of $\frac{I_t}{C_t} \dot{=} \frac{K_{t+1}-K_t}{C_t}$ is (see PI model notes):
+\begin{align*}
+    \frac{I_t^0}{C_t^0} &= \frac{K_{t+1}^0}{Y_{t+1}^0} \exp \log\left(\frac{Y_{t+1}^0}{Y_t^0}\right) \exp \log\left(\frac{Y_{t}^0}{C_t^0}\right) - \frac{K_{t}^0}{Y_{t}^0} \exp \log\left(\frac{Y_{t}^0}{C_t^0}\right)\\
+     &= \frac{K^0}{Y^0} \left[\exp({\sf g}) - 1\right] \exp\log\left(\frac{Y^0}{C^0}\right)\\
+     &= \frac{\frac{K^0}{Y^0} \left[\exp({\sf g}) - 1\right]}{\left[1+{\sf a} - \exp \left(\sf g \right) \right]\left(\frac{K^0}{Y^0}\right) + 1}
+\end{align*}
+\end{itemize}
+
+
+The 1st order component, $X_t^1$, has a state space representation:
+\begin{align*}
+    \log\frac{C_{t+1}^1}{C_{t}^1} &= D_1 \begin{bmatrix}\log\left(\frac{H_{t}^1}{Y_{t}^1}\right) & \frac{K_{t}^1}{Y_{t}^1} & Z_{1,t}^1 & Z_{2,t}^1 & Z_{2,t-1}^1 \end{bmatrix}' + F_1 W_{t+1} + H_1 \\
+    \frac{I_{t+1}^1}{C_{t+1}^1}\dot{=}\frac{K_{t+2}^1-K_{t+1}^1}{C_{t+1}^1} &= D_2 \begin{bmatrix}\log\left(\frac{H_{t}^1}{Y_{t}^1}\right) & \frac{K_{t}^1}{Y_{t}^1} & Z_{1,t}^1 & Z_{2,t}^1 & Z_{2,t-1}^1 \end{bmatrix}'  + F_2 W_{t+1} + H_2  \\
+    \begin{bmatrix}\log\left(\frac{H_{t+1}^1}{Y_{t+1}^1}\right) & \frac{K_{t+1}^1}{Y_{t+1}^1} & Z_{1,t+1} ^1& Z_{2,t+1}^1 & Z_{2,t}^1 \end{bmatrix}' &= A \begin{bmatrix}\log\left(\frac{H_{t}^1}{Y_{t}^1}\right) & \frac{K_{t}^1}{Y_{t}^1} & Z_{1,t}^1 & Z_{2,t}^1 & Z_{2,t-1}^1 \end{bmatrix}' + B W_{t+1}
+\end{align*}
+
+Combined together the 0th + 1st order state space representation makes the \textbf{Kalman Filter} applicable for estimation, i.e. we are actually estimating the 0th + 1st order linear state space approximation of the original (non-linear) permanent income model.
+
+\section*{Estimation problem}
+
+We want to estimate 5 parameters that govern the exogenous hidden states $Z_1$ and $Z_2$:
+\begin{equation*}
+\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}{\color{red}\phi_1} & 0 & 0 \\0 & {\color{red}\phi_{21}} & {\color{red}-\phi_{22}}\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}{\color{red}\sigma_1} & 0 \\0 & {\color{red}\sigma_2} \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+\end{equation*}
+We also have parameters $\rho$, $\chi$, $\alpha$, $\epsilon$ that govern preference, and we would potentially like to include them into estimation:
+
+\begin{equation*}
+V_t = \left[(1-\beta)U_t^{1-{\color{red}\rho}}+\beta R_t^{1-{\color{red}\rho}}\right]^{\frac{1}{1-{\color{red}\rho}}}
+\end{equation*}
+\begin{equation*}
+R_t = \mathbb{E}\left[V_{t+1}^{1-\gamma} \mid {\mathfrak F}_t\right]^{\frac{1}{1-\gamma}}
+\end{equation*}
+\begin{equation*}
+U_t = \left[(1-{\color{red}\alpha})C_t^{1-{\color{red}\epsilon}}+{\color{red}\alpha} H_t^{1-{\color{red}\epsilon}}\right]^{\frac{1}{1-{\color{red}\epsilon}}}
+\end{equation*}
+\begin{equation*}
+H_{t+1}  = {\color{red}\chi} H_t + (1-{\color{red}\chi}) C_t
+\end{equation*}
+
+The log income growth process would be
+\begin{equation*}
+\log(\frac{Y_{t+1}}{Y_t}) = .01(Z_{1,t+1}+Z_{2,t+1}-Z_{2,t}) + {\sf g} = .01\left(\begin{bmatrix} \color{red}{\phi_1}\\ \color{red}{\phi_{21} -1}\\\color{red}{-\phi_{22}}\end{bmatrix}\cdot \begin{bmatrix} Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}\color{red}{\sigma_1} & \color{red}{\sigma_2}\end{bmatrix} \begin{bmatrix}W_{1,t+1}\\W_{2,t+1} \end{bmatrix}\right) + {\sf g}
+\end{equation*}
+
+Here are some ``old numbers'' of the exogenous processes - these numbers are good for illustration purposes, but can potentially be far away from what is implied by the data, and that's the reason why we're doing the estimation.
+
+\begin{equation*}
+\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.704 & 0 & 0 \\0 & 1 & -.154\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.144 & 0 \\0 & .206 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+\end{equation*}
+%
+%When we use (fix) these values for other parameters:
+%\begin{equation*}
+%    \rho = 0.67, \quad \chi = 0.9, \quad \alpha = 0.9, \quad \epsilon = 10, \quad \gamma = 10, \quad \frac{K^0}{Y^0} = 0, \quad {\sf a} = 0.00663, \quad {\sf g} = 0.00373
+%\end{equation*}
+%We obtain these new estimates:
+%
+%\begin{equation*}
+%\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.430 & 0 & 0 \\0 & 1.243 & -.260\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.310 & 0 \\0 & 1.460 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+%\end{equation*}
+%
+%If we instead use (fix) these values for other parameters ($\approx$ unity IES, no habit):
+%\begin{equation*}
+%    \rho = {\color{red}1.00001}, \quad \chi = 0.9, \quad {\color{red} \alpha = 0.00001}, \quad \epsilon = 10, \quad \gamma = 10, \quad \frac{K^0}{Y^0} = 0, \quad {\sf a} = 0.00663, \quad {\sf g} = 0.00373
+%\end{equation*}
+%We obtain these new estimates:
+%
+%\begin{equation*}
+%\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.454 & 0 & 0 \\0 & 1.248 & -.290\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.290 & 0 \\0 & 1.455 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+%\end{equation*}
+%If we further set $\color{red}\frac{K^0}{Y^0} = 200$, we obtain these new estimates:
+%
+%\begin{equation*}
+%\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.312 & 0 & 0 \\0 & 1.309 & -.320\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.874 & 0 \\0 & 2.430 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+%\end{equation*}
+
+
+\section*{Some observations in numerical experiments}
+
+\begin{itemize}
+	\item If we allow scipy.optimize.minimize to freely search for the preference parameters, the outcome will usually be ugly, but things are usually not bad when we only search for the parameters in the exogenous state equations. This is potentially because the preference parameters governs the dynamics in a very non-linear manner. Therefore, we decide to only let scipy.optimize.minimize search over the exogenous parameters' space, and for the preference parameters, we do a grid search instead.
+	\item We notice that $\chi$ is not moving around very much, usually very close to 0.6. Small $\alpha$ and small (lower than 1) $\rho$ tend to have higher likelihood. $\epsilon$ has a big magnitude (a few hundreds).
+\end{itemize}
+
+\section*{Data, algorithm, and code}
+
+As stated previously, we use $\log\left(\frac{C_{t+1}}{C_t}\right)$ and $\frac{I_{t+1}}{C_{t+1}}$ as observables in writing the state space. The data (obtained from FRED) will look like:
+
+\begin{center}
+	\includegraphics[width=.8\textwidth]{PI_estimation_data.png}
+\end{center}
+
+The algorithm works like this:
+
+\begin{enumerate}
+	\item Back out the relevant $\sf g$ and $\frac{K^0}{Y^0}$ from data\footnote{For some reason that I don't remember exactly, we have fixed $\sf a$ to be $0.663\%$ rather than estimating it.};
+	\item Divide the preference parameter space using grids. On each grid point (i.e. for each combination of fixed preference parameters), let scipy.optimize.minimize search for the combination of exogenous parameters that can give the maximized log likelihood, where log likelihood is obtained using Kalman Filter.
+	\item Find the point on the preference parameter space that gives the maximized log likelihood, and also plot the region on the preference parameter space that gives log likelihood close\footnote{Usually, we look at the region with log likelihood decrease of 3.5 or less.} to the maximized value.
+\end{enumerate}
+
+
+The relevant code and results are contained in estimation\_preference\_2d.ipynb, as well as other relevant .py scripts.
+
+Very roughly speaking, we have the highest log likelihood when the preference parameters are given by $\rho = .67$, $\alpha = .1$, $\epsilon = 218$, $\chi = .61$, and the exogenous parameters that maximize the log likelihood in this case are:
+
+\begin{equation*}
+\begin{bmatrix}Z_{1,t+1}\\Z_{2,t+1}\\Z_{2,t}\end{bmatrix} = \begin{bmatrix}.796 & 0 & 0 \\0 & 1.029 & -.074\\ 0 & 1 & 0\end{bmatrix} \begin{bmatrix}Z_{1,t}\\Z_{2,t}\\Z_{2,t-1}\end{bmatrix} + \begin{bmatrix}.770 & 0 \\0 & 1.298 \\ 0 & 0\end{bmatrix} \begin{bmatrix} W_{1,t+1}\\ W_{2,t+1}\end{bmatrix}
+\end{equation*}
+
+\begin{center}
+	\includegraphics[width=.8\textwidth]{rho_0.67_alpha_0.10.png}
+\end{center}
+
+
+\end{document}
+
